@@ -129,7 +129,7 @@ val dataSourceModule = module {
                     .build()
                 chain.proceed(request)
             }
-            .addInterceptor(AIRequestInterceptor(remoteConfig = get()))
+            .addInterceptor(AIRequestInterceptor(remoteConfig = getOrNull()))
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.HEADERS
             })
