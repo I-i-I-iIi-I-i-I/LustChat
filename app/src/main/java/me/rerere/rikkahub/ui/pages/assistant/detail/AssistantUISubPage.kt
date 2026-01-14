@@ -39,6 +39,7 @@ import androidx.compose.material.icons.rounded.ArrowUpward
 import androidx.compose.material.icons.rounded.ContentCopy
 import androidx.compose.material.icons.rounded.MoreHoriz
 import androidx.compose.material.icons.rounded.Refresh
+import androidx.compose.material.icons.rounded.VisibilityOff
 import me.rerere.rikkahub.R
 import me.rerere.rikkahub.data.datastore.getEffectiveDisplaySetting
 import me.rerere.rikkahub.data.model.Assistant
@@ -127,6 +128,14 @@ fun AssistantUISubPage(
                 value = uiSettings.showTtsButton,
                 globalValue = settings.displaySetting.showTtsButton,
                 onValueChange = { updateUI(uiSettings.copy(showTtsButton = it)) }
+            )
+
+            TriStateSettingItem(
+                title = stringResource(R.string.setting_display_page_show_obfuscation_button_title),
+                subtitle = stringResource(R.string.setting_display_page_show_obfuscation_button_desc),
+                value = uiSettings.showObfuscationButton,
+                globalValue = settings.displaySetting.showObfuscationButton,
+                onValueChange = { updateUI(uiSettings.copy(showObfuscationButton = it)) }
             )
         }
 
@@ -299,7 +308,10 @@ private fun ChatPreview(
             }
 
             // Toolbar preview
-            ToolbarPreview(showTtsButton = effectiveDisplay.showTtsButton)
+            ToolbarPreview(
+                showTtsButton = effectiveDisplay.showTtsButton,
+                showObfuscationButton = effectiveDisplay.showObfuscationButton
+            )
         }
     }
 }
@@ -309,7 +321,8 @@ private fun ChatPreview(
  */
 @Composable
 private fun ToolbarPreview(
-    showTtsButton: Boolean = true
+    showTtsButton: Boolean = true,
+    showObfuscationButton: Boolean = true,
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -336,6 +349,17 @@ private fun ToolbarPreview(
         if (showTtsButton) {
             Icon(
                 imageVector = Icons.AutoMirrored.Rounded.VolumeUp,
+                contentDescription = null,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(50))
+                    .padding(8.dp)
+                    .size(16.dp),
+                tint = MaterialTheme.colorScheme.onSurface
+            )
+        }
+        if (showObfuscationButton) {
+            Icon(
+                imageVector = Icons.Rounded.VisibilityOff,
                 contentDescription = null,
                 modifier = Modifier
                     .clip(RoundedCornerShape(50))
