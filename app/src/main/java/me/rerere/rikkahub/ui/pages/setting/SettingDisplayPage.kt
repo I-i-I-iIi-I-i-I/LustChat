@@ -383,6 +383,18 @@ fun SettingDisplayPage(vm: SettingVM = koinViewModel()) {
                             )
                         }
                     )
+                    SettingGroupItem(
+                        title = stringResource(R.string.setting_display_page_show_tts_button_title),
+                        subtitle = stringResource(R.string.setting_display_page_show_tts_button_desc),
+                        trailing = {
+                            HapticSwitch(
+                                checked = displaySetting.showTtsButton,
+                                onCheckedChange = {
+                                    updateDisplaySetting(displaySetting.copy(showTtsButton = it))
+                                }
+                            )
+                        }
+                    )
                 }
             }
 

@@ -120,6 +120,14 @@ fun AssistantUISubPage(
                 globalValue = settings.displaySetting.autoCloseThinking,
                 onValueChange = { updateUI(uiSettings.copy(autoCloseThinking = it)) }
             )
+
+            TriStateSettingItem(
+                title = stringResource(R.string.setting_display_page_show_tts_button_title),
+                subtitle = stringResource(R.string.setting_display_page_show_tts_button_desc),
+                value = uiSettings.showTtsButton,
+                globalValue = settings.displaySetting.showTtsButton,
+                onValueChange = { updateUI(uiSettings.copy(showTtsButton = it)) }
+            )
         }
 
         // Message Jumper Settings
@@ -291,7 +299,7 @@ private fun ChatPreview(
             }
 
             // Toolbar preview
-            ToolbarPreview()
+            ToolbarPreview(showTtsButton = effectiveDisplay.showTtsButton)
         }
     }
 }
@@ -300,7 +308,9 @@ private fun ChatPreview(
  * Static toolbar preview showing action icons
  */
 @Composable
-private fun ToolbarPreview() {
+private fun ToolbarPreview(
+    showTtsButton: Boolean = true
+) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -323,15 +333,17 @@ private fun ToolbarPreview() {
                 .size(16.dp),
             tint = MaterialTheme.colorScheme.onSurface
         )
-        Icon(
-            imageVector = Icons.AutoMirrored.Rounded.VolumeUp,
-            contentDescription = null,
-            modifier = Modifier
-                .clip(RoundedCornerShape(50))
-                .padding(8.dp)
-                .size(16.dp),
-            tint = MaterialTheme.colorScheme.onSurface
-        )
+        if (showTtsButton) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Rounded.VolumeUp,
+                contentDescription = null,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(50))
+                    .padding(8.dp)
+                    .size(16.dp),
+                tint = MaterialTheme.colorScheme.onSurface
+            )
+        }
         Icon(
             imageVector = Icons.Rounded.MoreHoriz,
             contentDescription = null,
